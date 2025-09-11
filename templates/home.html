@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts</title>
+    <style>
+        body {
+            font-family: "Comic Sans MS", sans-serif;
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),url(/templates/bg.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .article {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .article h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .article p {
+            margin: 5px 0 0;
+        }
+        .article a {
+            text-decoration: none;
+            color: black;
+        }
+        .head-container {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+            max-width: 600px;
+            margin: 0 auto 10px;
+        }
+
+        .buttonDb button {
+            height: 35px;
+            background: white;
+            color: black;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: "Comic Sans MS", sans-serif;
+            font-weight: bold;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<div class="head-container">
+    <h1 class="title-post">Posts</h1>
+    <div class="buttonDb">
+        <button onclick="window.location.href='/dashboard'">Dashboard</button>
+    </div>
+</div>
+{{range .}}
+<div class="article">
+    <h2>
+        <a href="/posts/{{.ID}}" class="article-link">{{.Title}}</a>
+    </h2>
+    <p>{{.Content}}</p>
+    <p>{{.Date}}</p>
+</div>
+{{else}}
+<p>No posts found.</p>
+{{end}}
+</body>
+</html>
