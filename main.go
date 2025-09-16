@@ -28,6 +28,7 @@ func main() {
 	http.HandleFunc("/new", api.CreatePostWithAuth())
 	http.HandleFunc("/edit/", api.UpdatePostWithAuth())
 	http.HandleFunc("/delete/", api.DeletePostWithAuth())
+	http.HandleFunc("/search", api.SearchPostHanler)
 
 	http.HandleFunc("/login", api.LoginHandler)
 	http.HandleFunc("/logout", api.LogoutHandler)

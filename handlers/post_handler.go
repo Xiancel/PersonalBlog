@@ -211,6 +211,43 @@ func DeleteHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }
 
+// хендлер пошуку
+func SearchPostHanler(w http.ResponseWriter, r *http.Request) {
+	// перевірка методу
+	if r.Method != http.MethodGet {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	// пошук поста по назві
+	query := r.FormValue("search")
+	post := SearchPosts(query)
+
+	// валідація
+	if post == nil {
+		http.Error(w, `{"error":"no found"}`, http.StatusNotFound)
+		return
+	}
+
+	// парсинг
+	tmpl := parseTemplate("postpage.html")
+	tmpl.Execute(w, post)
+}
+
+// функція пошуку посту
+func SearchPosts(query string) *model.Posts {
+	// получення всіх постів
+	posts := getPosts()
+	// пошук посту
+	for _, p := range posts {
+		if strings.EqualFold(p.Title, query) {
+			return &p
+		}
+	}
+
+	return nil
+}
+
 // перевірка на авторизацію(на автора/адміна )
 func CreatePostWithAuth() http.HandlerFunc {
 	return middleware.CookieAuthMiddleware(NewHandler)
